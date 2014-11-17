@@ -80,7 +80,7 @@ gulp.task('min', function () {
 });
 
 gulp.task('copy-images', function () {
-    return gulp.src('src/images/**/*.*', { base: './src/images' })
+    return gulp.src('src/images/**/*.{jpg,png,gif}', { base: './src/images' })
         .pipe(gulp.dest(
             [buildDirectory, 'images'].join('/')
         ));
