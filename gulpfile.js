@@ -1,4 +1,9 @@
 var gulp = require('gulp');
+var $ = require('gulp-load-plugins')();
+
+var dhis2Config = require('./gulphelp.js').checkForDHIS2ConfigFile();
+var dhisDirectory = dhis2Config.dhisDeployDirectory;
+var buildDirectory = 'build';
 
 var files = [
     //Lib files
@@ -9,11 +14,13 @@ var files = [
 
     //Test files
     'test/fixtures/**/*.js',
-    'test/matchers/**/*.js',
     'test/mocks/**/*_mock.js',
     'test/specs/**/*_spec.js'
 ];
-var buildDirectory = 'build';
+
+/**************************************************************************************************
+ * Gulp tasks
+ */
 
 gulp.task('clean', function () {
     var del = require('del');
@@ -21,61 +28,69 @@ gulp.task('clean', function () {
 });
 
 gulp.task('test', function () {
-    return gulp.src(files).pipe(runKarma());
+    return gulp.src([]).pipe(runKarma());
 });
 
 gulp.task('watch', function () {
-    return gulp.src(files).pipe(runKarma(true));
+    return gulp.src([]).pipe(runKarma(true));
 });
 
 gulp.task('jshint', function () {
-    var jshint = require('gulp-jshint');
-
     return gulp.src([
             'test/specs/**/*.js',
             'src/**/*.js'
         ])
-        .pipe(jshint())
-        .pipe(jshint.reporter('jshint-stylish'))
-        .pipe(jshint.reporter('fail'));
+        .pipe($.jshint())
+        .pipe($.jshint.reporter('jshint-stylish'))
+        .pipe($.jshint.reporter('fail'));
 });
 
 gulp.task('jscs', function () {
-    var jscs = require('gulp-jscs');
-
     return gulp.src([
         'test/specs/**/*.js',
         'src/**/*.js'
-    ]).pipe(jscs('./.jscsrc'));
+    ]).pipe($.jscs('./.jscsrc'));
 });
 
 gulp.task('scss', function () {
-    var sass = require('gulp-ruby-sass');
-    var minifyCss = require('gulp-minify-css');
-
     return gulp.src('src/app.scss', { base: './src/' })
         .pipe(gulp.dest(
             [buildDirectory, 'scss'].join('/')
         ))
-        .pipe(sass({ sourcemap: true, sourcemapPath: 'scss/' }))
-        .pipe(minifyCss())
+        .pipe($.rubySass({ sourcemap: true, sourcemapPath: 'scss/' }))
+        .pipe($.minifyCss())
         .pipe(gulp.dest(
             [buildDirectory, 'css'].join('/')
         ));
 });
 
 gulp.task('min', function () {
-    var usemin = require('gulp-usemin');
-    var minifyHtml = require('gulp-minify-html');
-    var sass = require('gulp-ruby-sass');
-    var uglify = require('gulp-uglify');
-    var rev = require('gulp-rev');
+    return gulp.src(['src/**/*.*'])
+        .pipe(gulp.dest(buildDirectory));
 
-    return gulp.src(['src/**/*.html'])
-        .pipe(usemin({
-            html: [minifyHtml({empty: true, quotes: true })],
-            js: [uglify(), rev()]
-        }))
+    //var mangleJS = false;
+    //
+    //var assets = $.useref.assets();
+    //
+    //return gulp.src('src/**/*.html')
+    //    .pipe(assets)
+    //    .pipe(assets.restore())
+    //    .pipe($.useref())
+    //    .pipe($.if('*.css', $.minifyCss()))
+    //    .pipe($.if('**/app.js', $.ngAnnotate({
+    //        add: true,
+    //        remove: true,
+    //        single_quotes: true,
+    //        stats: true
+    //    })))
+    //    //.pipe($.if('*.js', $.uglify({
+    //    //    mangle: mangleJS
+    //    //})))
+    //    .pipe(gulp.dest(buildDirectory));
+});
+
+gulp.task('deps', function () {
+    return gulp.src(['config.js', 'jspm_packages/github/**/*.js', 'jspm_packages/npm/d2/*.js', 'jspm_packages/*.js', 'jspm_packages/*.map'], {base: '.'})
         .pipe(gulp.dest(buildDirectory));
 });
 
@@ -86,17 +101,21 @@ gulp.task('copy-images', function () {
         ));
 });
 
-gulp.task('build', function () {
+gulp.task('build', function (cb) {
     var runSequence = require('run-sequence');
-    runSequence('clean', 'test', 'scss', 'jshint', 'jscs', 'min', 'copy-images');
+    runSequence('clean', 'test', 'scss', 'jshint', 'jscs', 'min', 'copy-images', cb);
 });
 
-gulp.task('default', function () {
-    //TODO: Think of something to do here that is sensible but does not do unexpected stuff
+gulp.task('copy-app', function () {
+    gulp.src('build/**/*.*', { base: './build/' }).pipe(gulp.dest(dhisDirectory));
+});
+
+gulp.task('copy-to-dev', function (cb) {
+    var runSequence = require('run-sequence');
+    return runSequence('clean', /*'test', 'scss', 'jshint', 'jscs',*/ ['min', 'deps'], 'copy-images', 'copy-app', cb);
 });
 
 function runKarma(watch) {
-    var karma = require('gulp-karma');
     var config = {
         configFile: 'test/karma.conf.js'
     };
@@ -109,5 +128,5 @@ function runKarma(watch) {
         config.action = 'watch';
     }
 
-    return karma(config);
+    return $.karma(config);
 }

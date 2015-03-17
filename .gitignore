@@ -4,6 +4,7 @@
 .sass-cache
 
 node_modules/
+jspm_packages/
 lib/
 build/
 
@@ -11,3 +12,5 @@ build/
 coverage
 
 *.zip
+
+npm-debug.log

@@ -1,0 +1,4 @@
+{
+  "dhisBaseUrl": "http://localhost:8080/dhis",
+  "dhisDeployDirectory": "/usr/local/apache-tomcat-8.0.5/webapps/dhis/apps/data-dictionary/"
+}
