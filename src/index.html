@@ -3,9 +3,13 @@
 <head>
     <title></title>
     <link href="css/app.css" rel="stylesheet" type="text/css" />
+    <script src="./jspm_packages/babel-polyfill.js"></script>
 </head>
 <body ng-controller="AppController as app">
     <div ng-bind="app.name"></div>
+    <div ng-bind="app.columns"></div>
+
+    <d2-table column-names="app.columns" table-data-source="app.source"></d2-table>
 
     <script src="jspm_packages/system.js"></script>
     <script src="config.js"></script>

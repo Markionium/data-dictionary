@@ -16,6 +16,9 @@ describe('Sample spec', function () {
         models.dataElement = {
             list: sinon.stub().returns(new Promise(function (resolve) {resolve([{name: 'This seems to work'}])}))
         };
+        models.user = {
+            list: sinon.stub().returns(new Promise(function (resolve) {resolve([{name: 'This seems to work'}])}))
+        };
 
         let $controller = $injector.get('$controller');
 

@@ -1,0 +1,15 @@
+<div class="d2-table">
+    <table>
+        <thead>
+            <tr>
+                <th ng-repeat="columnName in tableCtrl.columnNames" ng-bind="tableCtrl.getHeaderName(columnName)"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="row in tableCtrl.rows">
+                <td ng-repeat="columnName in ::tableCtrl.columnNames" ng-bind="::row[columnName]"></td>
+            </tr>
+        </tbody>
+    </table>
+    <d2-table-pager></d2-table-pager>
+</div>

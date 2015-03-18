@@ -89,6 +89,11 @@ gulp.task('min', function () {
     //    .pipe(gulp.dest(buildDirectory));
 });
 
+gulp.task('copy-d2-source', function () {
+   return gulp.src(['../d2/build/*'], {base: '../d2/build'})
+        .pipe(gulp.dest('jspm_packages/npm/d2'));
+});
+
 gulp.task('deps', function () {
     return gulp.src(['config.js', 'jspm_packages/github/**/*.js', 'jspm_packages/npm/d2/*.js', 'jspm_packages/*.js', 'jspm_packages/*.map'], {base: '.'})
         .pipe(gulp.dest(buildDirectory));
@@ -112,7 +117,7 @@ gulp.task('copy-app', function () {
 
 gulp.task('copy-to-dev', function (cb) {
     var runSequence = require('run-sequence');
-    return runSequence('clean', /*'test', 'scss', 'jshint', 'jscs',*/ ['min', 'deps'], 'copy-images', 'copy-app', cb);
+    return runSequence('clean', 'copy-d2-source', /*'test', 'scss', 'jshint', 'jscs',*/ ['min', 'deps'], 'copy-images', 'copy-app', cb);
 });
 
 function runKarma(watch) {

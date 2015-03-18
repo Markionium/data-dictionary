@@ -18,4 +18,6 @@ export default function () {
     angular.module('d2.api').factory('Api', () => {
         return {};
     });
+
+    angular.module('d2.components', []);
 }

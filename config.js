@@ -4,6 +4,8 @@ System.config({
   "paths": {
     "*": "*.js",
     "d2": "jspm_packages/npm/d2/*.js",
+    "d2.angular": "d2.angular/*.js",
+    "d2.angular/*": "d2.angular/*.js",
     "github:*": "jspm_packages/github/*.js",
     "npm:*": "jspm_packages/npm/*.js"
   }
