@@ -2,7 +2,7 @@ import angular from 'angular';
 
 function d2TableDirective() {
     class D2TableDirectiveController {
-        
+
     }
 
     return {
