@@ -3,18 +3,17 @@ module.exports = function( config ) {
         basePath: '../',
         frameworks: ['mocha', 'chai', 'sinon-chai', 'sinon', 'systemjs'],
 
-        plugins: ['karma-systemjs', 'karma-mocha', 'karma-chai', 'karma-sinon', 'karma-sinon-chai', 'karma-phantomjs-launcher', 'karma-chrome-launcher'],
+        plugins: ['karma-systemjs', 'karma-mocha', 'karma-chai', 'karma-sinon', 'karma-sinon-chai', 'karma-phantomjs-launcher', 'karma-chrome-launcher', 'karma-ng-html2js-preprocessor'],
 
         preprocessors: {
-            //'./test/specs/**/*_spec.js': ['babel'],
-            //'./src/**/*.js': ['babel']
+            './src/**/*.html': 'html2js'
         },
 
         files: [
             './test/fixtures/**/*.js',
-            './jspm_packages/github/components/jquery@2.1.3/jquery.js',
-            {pattern: './test/**/*_spec.js', included: false, watched: true},
-            {pattern: './dhis/api/schemas', included: false, watched: true}
+            {pattern: './test/**/*_spec.js', included: false, watched: true, served: true},
+            {pattern: './src/**/*.js', included: false, watched: true, served: true},
+            {pattern: './src/**/*.html', included: false, watched: true, served: true},
         ],
 
         reporters: ['progress'],
@@ -32,6 +31,10 @@ module.exports = function( config ) {
             }
         },
 
+        ngHtml2JsPreprocessor: {
+            stripPrefix: 'src/'
+        },
+
         coverageReporter: {
             type: 'lcov',
             dir: '../coverage',
@@ -44,16 +47,19 @@ module.exports = function( config ) {
         systemjs: {
             configFile: './config.js',
             files: [
+                //Mocks
                 './test/mocks/d2-angular.js',
-                './jspm_packages/npm/d2/d2.js',
+
+                //JSPM Dependencies for Systemjs
                 './jspm_packages/github/components/jquery@2.1.3.js',
                 './jspm_packages/github/components/jquery@2.1.3/jquery.js',
                 './jspm_packages/github/angular/bower-angular@1.3.14.js',
                 './jspm_packages/github/angular/bower-angular@1.3.14/angular.js',
                 './jspm_packages/github/angular/bower-angular-mocks@1.3.14.js',
                 './jspm_packages/github/angular/bower-angular-mocks@1.3.14/angular-mocks.js',
-                './src/**/*.js',
 
+                //App source and test files
+                './src/**/*.js',
                 './test/specs/**/*_spec.js'
             ],
 
@@ -61,6 +67,7 @@ module.exports = function( config ) {
                 baseURL: '/',
                 transpiler: 'babel',
                 paths: {
+                    //Paths to overwrite/add for test environment
                     'jquery': './jspm_packages/github/components/jquery@2.1.3/jquery.js',
                     'angular': './jspm_packages/github/angular/bower-angular@1.3.14/angular.js',
                     'angular-mocks': './jspm_packages/github/angular/bower-angular-mocks@1.3.14/angular-mocks.js',

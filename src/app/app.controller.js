@@ -1,9 +1,9 @@
 class AppController {
-    constructor(models, Api) {
+    constructor(models) {
         this.name = 'MyApp';
         models.dataElement.list()
             .then((dataElementCollection) => {
-                dataElementCollection.forEach(printName);
+                //dataElementCollection.forEach(printName);
             });
     }
 }

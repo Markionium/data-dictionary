@@ -1,13 +1,11 @@
 import jquery from 'jquery';
 import angular from 'angular';
-import 'angular-mocks';
 import d2Angular from 'd2.angular';
 
+import 'angular-mocks';
 import 'src/app';
 
 describe('Sample spec', function () {
-    d2Angular();
-
     let models;
     let myService;
     let controller;
@@ -55,8 +53,7 @@ describe('Sample spec', function () {
         it('should load my app', (done) => {
             System.import('src/app')
                 .then((app) => {
-                    console.log(app.default.name);
-                    //expect(app.name).to.equal('MyApp');
+                    expect(app.default.name).to.equal('MyApp');
                     done();
                 });
         });
@@ -67,7 +64,6 @@ describe('Sample spec', function () {
                     System.import('src/app')
                     .then((myapp) => {
                             expect(angular.element).to.not.be.undefined;
-                            expect(window.bootstrapped).to.be.defined;
                             done();
                         });
                 });
