@@ -1,6 +1,7 @@
 import angular from 'angular';
 import 'src/d2.angular/table/d2-table';
 import 'src/d2.angular/table/d2-table.html';
+import 'src/d2.angular/table/d2-table-pager.html';
 
 describe('Table Directive', () => {
     let element;

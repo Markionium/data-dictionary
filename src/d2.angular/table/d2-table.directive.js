@@ -23,7 +23,6 @@ function d2TableDirective($q) {
                 if (data.toArray) {
                     if (data.pager) {
                         this.pager = data.pager;
-                        this.pager.hasNextPage = data.hasNextPage();
                     }
                     data = data.toArray();
                 }

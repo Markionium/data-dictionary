@@ -1,3 +1,11 @@
 <div class="d2-table-pager" ng-if="tableCtrl.pager">
-    <button class="next-page" ng-show="tableCtrl.pager.hasNextPage">Next page</button>
+    <button class="previous-page" ng-show="tableCtrl.pager.hasPreviousPage()" ng-click="getPreviousPageClick()">Previous page</button>
+    <ul class="pagination">
+        <li ng-repeat="page in pagination"
+            ng-class="{'active': page.active}">
+            <span class="separator" ng-if="page.separator" ng-bind="page.separator"></span>
+            <span class="page-button" ng-if="page.pageNr" ng-bind="page.pageNr" ng-click="goToPageClick(page.pageNr)"></span>
+        </li>
+    </ul>
+    <button class="next-page" ng-show="tableCtrl.pager.hasNextPage()" ng-click="getNextPageClick()">Next page</button>
 </div>

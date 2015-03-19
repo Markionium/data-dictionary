@@ -35,7 +35,12 @@ describe('Table pager', () => {
             pageCount: 65,
             total: 3216,
             nextPage: 'http://localhost:8080/dhis/api/users?page=2',
-            hasNextPage: false
+            hasNextPage: function () {
+                return true;
+            },
+            hasPreviousPage: function () {
+                return false;
+            }
         };
         scope.$apply();
     }));
@@ -61,18 +66,89 @@ describe('Table pager', () => {
         let nextButton;
 
         beforeEach(() => {
-            nextButton = element.find('.next-button');
+            nextButton = element.find('.next-page');
         });
 
         it('should be shown', () => {
-            expect(nextButton).not.to.be.undefined;
+            expect(nextButton[0].classList.contains('ng-hide')).to.be.false;
         });
 
         it('should not be shown', () => {
-            controller.pager.hasNextPage = false;
+            controller.pager.hasNextPage = function () {
+                return false;
+            };
             nextButton = element.find('.next-page');
+            scope.$apply();
 
             expect(nextButton[0].classList.contains('ng-hide')).to.be.true;
+        });
+
+        it('should call getNextPage on the pager when next page is clicked', () => {
+            controller.pager.getNextPage = sinon.stub().returns({toArray() {}});
+
+            nextButton.click();
+            scope.$apply();
+
+            expect(controller.pager.getNextPage).to.be.called;
+        });
+    });
+
+    describe('previous button', () => {
+        let previousButton;
+
+        beforeEach(() => {
+            previousButton = element.find('.previous-page');
+        });
+
+        it('should be shown', () => {
+            expect(previousButton[0].classList.contains('ng-hide')).to.be.true;
+        });
+
+        it('should not be shown', () => {
+            controller.pager.hasPreviousPage = function () {
+                return true;
+            };
+            previousButton = element.find('.previous-page');
+            scope.$apply();
+
+            expect(previousButton[0].classList.contains('ng-hide')).to.be.false;
+        });
+
+        it('should call getPreviousPage on the pager when next page is clicked', () => {
+            controller.pager.getPreviousPage = sinon.stub().returns({toArray() {}});
+
+            previousButton.click();
+            scope.$apply();
+
+            expect(controller.pager.getPreviousPage).to.be.called;
+        });
+    });
+
+    describe('page information', () => {
+        let pagingInformation;
+
+        beforeEach(() => {
+            pagingInformation = element.find('.pagination');
+        });
+
+        it('should have the pagination element', () => {
+            expect(pagingInformation.length).to.equal(1);
+        });
+
+        it('should have a button for the first page', () => {
+            expect(pagingInformation.children().first().children()[0].textContent).to.equal('1');
+        });
+
+        it('should have a button for the last page', () => {
+            expect(pagingInformation.children().last().children()[0].textContent).to.equal('65');
+        });
+
+        it('should call the goToPage method on pager when a page number is called', () => {
+            controller.pager.goToPage = sinon.stub().returns({toArray() {}});
+
+            pagingInformation.children().last().children().click();
+
+            expect(controller.pager.goToPage).to.be.calledWith(65);
         });
     });
 });
