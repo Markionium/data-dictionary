@@ -1,6 +1,10 @@
+@import './d2.angular/table/table';
+
 $app-width: 80%;
 
 body {
+  width: 80%;
+  margin: 0 auto;
   div.app {
     width: $app-width;
   }

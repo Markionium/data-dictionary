@@ -16,8 +16,8 @@ System.config({
     "angular": "github:angular/bower-angular@1.3.14",
     "angular-material": "github:angular/bower-material@0.8.3",
     "angular-mocks": "github:angular/bower-angular-mocks@1.3.14",
+    "font-awesome": "npm:font-awesome@4.3.0",
     "jquery": "github:components/jquery@2.1.3",
-
     "github:angular/bower-angular-animate@1.3.14": {
       "angular": "github:angular/bower-angular@1.3.14"
     },
@@ -168,3 +168,4 @@ System.config({
     }
   }
 });
+

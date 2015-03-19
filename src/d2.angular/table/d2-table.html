@@ -7,7 +7,7 @@
         </thead>
         <tbody>
             <tr ng-repeat="row in tableCtrl.rows">
-                <td ng-repeat="columnName in ::tableCtrl.columnNames" ng-bind="::row[columnName]"></td>
+                <td data-title="{{::tableCtrl.getHeaderName(columnName)}}" ng-repeat="columnName in ::tableCtrl.columnNames" ng-bind="::row[columnName]"></td>
             </tr>
         </tbody>
     </table>

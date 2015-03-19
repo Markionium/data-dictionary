@@ -54,10 +54,7 @@ gulp.task('jscs', function () {
 
 gulp.task('scss', function () {
     return gulp.src('src/app.scss', { base: './src/' })
-        .pipe(gulp.dest(
-            [buildDirectory, 'scss'].join('/')
-        ))
-        .pipe($.rubySass({ sourcemap: true, sourcemapPath: 'scss/' }))
+        .pipe($.rubySass({ sourcemap: true, sourcemapPath: 'scss/', debugInfo: true }))
         .pipe($.minifyCss())
         .pipe(gulp.dest(
             [buildDirectory, 'css'].join('/')
@@ -65,7 +62,7 @@ gulp.task('scss', function () {
 });
 
 gulp.task('min', function () {
-    return gulp.src(['src/**/*.*'])
+    return gulp.src(['src/**/*.*', '!**/*.scss'])
         .pipe(gulp.dest(buildDirectory));
 
     //var mangleJS = false;
@@ -95,7 +92,15 @@ gulp.task('copy-d2-source', function () {
 });
 
 gulp.task('deps', function () {
-    return gulp.src(['config.js', 'jspm_packages/github/**/*.js', 'jspm_packages/npm/d2/*.js', 'jspm_packages/*.js', 'jspm_packages/*.map'], {base: '.'})
+    return gulp.src([
+            'config.js',
+            'jspm_packages/github/**/*.js',
+            'jspm_packages/github/**/*.css',
+            'jspm_packages/npm/d2/*.js',
+            'jspm_packages/npm/font-awesome@4.3.0/**',
+            'jspm_packages/*.js',
+            'jspm_packages/*.map'
+        ], {base: '.'})
         .pipe(gulp.dest(buildDirectory));
 });
 
@@ -117,7 +122,7 @@ gulp.task('copy-app', function () {
 
 gulp.task('copy-to-dev', function (cb) {
     var runSequence = require('run-sequence');
-    return runSequence('clean', 'copy-d2-source', /*'test', 'scss', 'jshint', 'jscs',*/ ['min', 'deps'], 'copy-images', 'copy-app', cb);
+    return runSequence('clean', 'copy-d2-source', /*'test',*/ 'scss', /*'jshint', 'jscs',*/ ['min', 'deps'], 'copy-images', 'copy-app', cb);
 });
 
 function runKarma(watch) {
