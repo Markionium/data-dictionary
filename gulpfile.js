@@ -86,7 +86,12 @@ gulp.task('min', function () {
     //    .pipe(gulp.dest(buildDirectory));
 });
 
-gulp.task('copy-d2-source', function () {
+gulp.task('clean-d2-source', function (cb) {
+    var del = require('del');
+    del('jspm_packages/npm/d2/*.js', cb);
+});
+
+gulp.task('copy-d2-source', ['clean-d2-source'], function () {
    return gulp.src(['../d2/build/*'], {base: '../d2/build'})
         .pipe(gulp.dest('jspm_packages/npm/d2'));
 });

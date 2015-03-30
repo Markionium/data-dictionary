@@ -14,7 +14,7 @@ function continueBootstrap(appName, extraDependencies = []) {
     return function () {
         angular.bootstrap(document.querySelector('body'), [appName].concat(extraDependencies));
         angular.resumeBootstrap();
-    }
+    };
 }
 
 function logBootstrapError(e) {

@@ -4,10 +4,10 @@
     </button>
     <ul class="pagination">
         <li ng-repeat="page in pagination"
-            ng-class="{'active': page.active, 'separator': page.separator}">
+            ng-class="{'active': page.active, 'separator': page.separator}"
+            ng-click="goToPageClick(page.pageNr)">
             <span ng-if="page.separator" ng-bind="page.separator"></span>
-            <span class="page-button" ng-if="page.pageNr" ng-bind="page.pageNr"
-                  ng-click="goToPageClick(page.pageNr)"></span>
+            <span class="page-button" ng-if="page.pageNr" ng-bind="page.pageNr"></span>
         </li>
     </ul>
     <button class="next-page" ng-show="tableCtrl.pager.hasNextPage()" ng-click="getNextPageClick()">
