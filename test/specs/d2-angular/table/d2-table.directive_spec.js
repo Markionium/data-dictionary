@@ -63,6 +63,41 @@ describe('Table Directive', () => {
 
             expect(controller.rows).to.deep.equal(newData);
         }));
+
+        describe('loading flag', () => {
+            var resolveDataSource;
+            var rejectDataSource;
+            var asyncDataSource;
+
+            beforeEach(inject(($q) => {
+                asyncDataSource = $q(function (resolve, reject) {
+                    resolveDataSource = resolve;
+                    rejectDataSource = reject;
+                });
+
+                scope.tableOptions.source = asyncDataSource;
+                scope.$apply();
+            }));
+
+            it('should be set to true when a new source is set', () => {
+
+                expect(controller.isLoading).to.be.true;
+            });
+
+            it('should be set to false after the data has been retrieved', () => {
+                resolveDataSource([]);
+                scope.$apply();
+
+                expect(controller.isLoading).to.be.false;
+            });
+
+            it('should be set to false after the request for data errored', () => {
+                rejectDataSource([]);
+                scope.$apply();
+
+                expect(controller.isLoading).to.be.false;
+            });
+        });
     });
 
     describe('table header', () => {

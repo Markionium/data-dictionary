@@ -45,7 +45,7 @@ module.exports = function( config ) {
 
         logLevel: config.LOG_INFO,
 
-        browsers: [/*'PhantomJS',*/ 'Chrome'/*, 'Firefox'*/],
+        browsers: ['PhantomJS'],
         singleRun: true
     });
 };

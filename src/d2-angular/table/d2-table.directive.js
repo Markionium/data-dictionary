@@ -21,16 +21,17 @@ function d2TableDirective($q) {
         },
 
         updateRows() {
-            this.sourcePromise.then((data) => {
-                if (data.toArray) {
+            this.sourcePromise
+                .then((data) => {
                     if (data.pager) {
                         this.pager = data.pager;
                     }
-                    data = data.toArray();
-                }
-                this.rows = data;
-                this.isLoading = false;
-            });
+                    if (data.toArray) {
+                        data = data.toArray();
+                    }
+                    this.rows = data;
+                })
+                .finally(() => this.isLoading = false);
         }
     };
 
