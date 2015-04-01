@@ -2,7 +2,24 @@ function d2TablePagerDirective() {
     return {
         restict: 'E',
         require: '^d2Table',
-        templateUrl: 'd2.angular/table/d2-table-pager.html',
+        template: `
+            <div class="d2-table-pager" ng-if="tableCtrl.pager">
+                <button class="previous-page" ng-show="tableCtrl.pager.hasPreviousPage()" ng-click="getPreviousPageClick()">
+                    <i class="fa fa-chevron-left"></i>
+                </button>
+                <ul class="pagination">
+                    <li ng-repeat="page in pagination"
+                        ng-class="{'active': page.active, 'separator': page.separator}"
+                        ng-click="goToPageClick(page.pageNr)">
+                        <span ng-if="page.separator" ng-bind="page.separator"></span>
+                        <span class="page-button" ng-if="page.pageNr" ng-bind="page.pageNr"></span>
+                    </li>
+                </ul>
+                <button class="next-page" ng-show="tableCtrl.pager.hasNextPage()" ng-click="getNextPageClick()">
+                    <i class="fa fa-chevron-right"></i>
+                </button>
+            </div>
+        `,
         controllerAs: 'tableCtrl',
         link: function (scope, element, attr, controller) {
             scope.getNextPageClick = function () {

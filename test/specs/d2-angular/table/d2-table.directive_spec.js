@@ -1,7 +1,7 @@
 import angular from 'angular';
-import 'src/d2.angular/table/d2-table';
-import 'src/d2.angular/table/d2-table.html';
-import 'src/d2.angular/table/d2-table-pager.html';
+import 'angular-mocks';
+
+import 'd2-angular/table/d2-table';
 
 describe('Table Directive', () => {
     let element;
@@ -9,9 +9,7 @@ describe('Table Directive', () => {
     let isolatedScope;
     let controller;
 
-    beforeEach(module('d2.angular/table/d2-table.html'));
-    beforeEach(module('d2.angular/table/d2-table-pager.html'));
-    beforeEach(module('d2.angular.table'));
+    beforeEach(module('d2-angular.table'));
     beforeEach(inject(($compile, $rootScope) => {
         element = angular.element('<d2-table column-names="tableOptions.columnNames" table-data-source="tableOptions.source"></d2-table>');
 
@@ -29,9 +27,9 @@ describe('Table Directive', () => {
         scope.$digest();
 
         isolatedScope = element.scope();
-        controller = element.controller('d2-table');
+        controller = element.controller('d2Table');
     }));
-    
+
     it('should have be a table element', () => {
         expect(element[0].classList.contains('d2-table')).to.be.true;
     });
@@ -106,7 +104,7 @@ describe('Table Directive', () => {
             let firstDataRow;
 
             beforeEach(() => {
-                firstDataRow = tableBodyElement.children().first();
+                firstDataRow = angular.element(tableBodyElement.children()[0]);
             });
 
             it('should have the same amount of fields like the number of columns', () => {
@@ -129,7 +127,7 @@ describe('Table Directive', () => {
                 scope.tableOptions.source = $q.when(newData);
                 scope.$apply();
 
-                firstDataRow = tableBodyElement.children().first();
+                firstDataRow = angular.element(tableBodyElement.children()[0]);
                 expect(firstDataRow.children()[0].textContent).to.equal('b1');
                 expect(firstDataRow.children()[1].textContent).to.equal('BDC');
                 expect(firstDataRow.children()[2].textContent).to.equal('Tomorrow');

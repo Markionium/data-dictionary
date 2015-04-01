@@ -1,7 +1,7 @@
 import angular from 'angular';
-import 'src/d2.angular/table/d2-table';
-import 'src/d2.angular/table/d2-table.html';
-import 'src/d2.angular/table/d2-table-pager.html';
+import 'angular-mocks';
+
+import 'src/d2-angular/table/d2-table';
 
 describe('Table pager', () => {
     let element;
@@ -9,9 +9,7 @@ describe('Table pager', () => {
     let isolatedScope;
     let controller;
 
-    beforeEach(module('d2.angular/table/d2-table.html'));
-    beforeEach(module('d2.angular/table/d2-table-pager.html'));
-    beforeEach(module('d2.angular.table'));
+    beforeEach(module('d2-angular.table'));
     beforeEach(inject(($compile, $rootScope) => {
         element = angular.element('<d2-table column-names="tableOptions.columnNames" table-data-source="tableOptions.source"></d2-table>');
 
@@ -29,7 +27,7 @@ describe('Table pager', () => {
         scope.$digest();
 
         isolatedScope = element.scope();
-        controller = element.controller('d2-table');
+        controller = element.controller('d2Table');
         controller.pager = {
             page:1,
             pageCount: 65,
@@ -66,21 +64,21 @@ describe('Table pager', () => {
         let nextButton;
 
         beforeEach(() => {
-            nextButton = element.find('.next-page');
+            nextButton = element[0].querySelector('.next-page');
         });
 
         it('should be shown', () => {
-            expect(nextButton[0].classList.contains('ng-hide')).to.be.false;
+            expect(nextButton.classList.contains('ng-hide')).to.be.false;
         });
 
         it('should not be shown', () => {
             controller.pager.hasNextPage = function () {
                 return false;
             };
-            nextButton = element.find('.next-page');
+            nextButton = element[0].querySelector('.next-page');
             scope.$apply();
 
-            expect(nextButton[0].classList.contains('ng-hide')).to.be.true;
+            expect(nextButton.classList.contains('ng-hide')).to.be.true;
         });
 
         it('should call getNextPage on the pager when next page is clicked', () => {
@@ -97,21 +95,21 @@ describe('Table pager', () => {
         let previousButton;
 
         beforeEach(() => {
-            previousButton = element.find('.previous-page');
+            previousButton = element[0].querySelector('.previous-page');
         });
 
-        it('should be shown', () => {
-            expect(previousButton[0].classList.contains('ng-hide')).to.be.true;
+        it('should not be shown', () => {
+            expect(previousButton.classList.contains('ng-hide')).to.be.true;
         });
 
         it('should not be shown', () => {
             controller.pager.hasPreviousPage = function () {
                 return true;
             };
-            previousButton = element.find('.previous-page');
+            previousButton = element[0].querySelector('.previous-page');
             scope.$apply();
 
-            expect(previousButton[0].classList.contains('ng-hide')).to.be.false;
+            expect(previousButton.classList.contains('ng-hide')).to.be.false;
         });
 
         it('should call getPreviousPage on the pager when next page is clicked', () => {
