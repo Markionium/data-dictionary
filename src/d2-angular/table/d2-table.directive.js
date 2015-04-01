@@ -1,5 +1,6 @@
 function d2TableDirective($q) {
     function D2TableDirectiveController() {
+        this.isLoading = false;
         this.tableDataSource;
         this.sourcePromise;
         this.columnNames;
@@ -10,6 +11,7 @@ function d2TableDirective($q) {
 
     D2TableDirectiveController.prototype = {
         initialise() {
+            this.isLoading = true;
             this.sourcePromise = $q.when(this.tableDataSource);
             this.updateRows();
         },
@@ -20,6 +22,7 @@ function d2TableDirective($q) {
 
         updateRows() {
             this.sourcePromise.then((data) => {
+                console.log(data);
                 if (data.toArray) {
                     if (data.pager) {
                         this.pager = data.pager;
@@ -27,6 +30,7 @@ function d2TableDirective($q) {
                     data = data.toArray();
                 }
                 this.rows = data;
+                this.isLoading = false;
             });
         }
     };

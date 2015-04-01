@@ -1,0 +1,25 @@
+<div class="d2-table">
+    <div class="mask">
+        <div ng-show="tableCtrl.isLoading" layout="row" layout-sm="column" layout-align="space-around">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th ng-repeat="columnName in tableCtrl.columnNames"
+                    ng-bind="tableCtrl.getHeaderName(columnName)">
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="row in tableCtrl.rows">
+                <td data-title="{{::tableCtrl.getHeaderName(columnName)}}"
+                    ng-repeat="columnName in ::tableCtrl.columnNames"
+                    ng-bind="::row[columnName]">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <d2-table-pager></d2-table-pager>
+</div>

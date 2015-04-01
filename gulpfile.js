@@ -53,9 +53,11 @@ gulp.task('jscs', function () {
 });
 
 gulp.task('scss', function () {
-    return gulp.src('src/app.scss', { base: './src/' })
-        .pipe($.rubySass({ sourcemap: true, sourcemapPath: 'scss/', debugInfo: true }))
-        .pipe($.minifyCss())
+    return $.rubySass(['./src/app.scss'], {loadPath: './src', style: 'expanded'})
+        .on('error', function (err) {
+            console.error('Error!', err.message);
+        })
+        //.pipe($.minifyCss())
         .pipe(gulp.dest(
             [buildDirectory, 'css'].join('/')
         ));
@@ -102,6 +104,9 @@ gulp.task('deps', function () {
             'jspm_packages/github/**/*.js',
             'jspm_packages/github/**/*.css',
             'jspm_packages/npm/d2/*.js',
+            'jspm_packages/npm/babel@*.js',
+            'jspm_packages/npm/babel@*/*.js',
+            'jspm_packages/npm/babel-runtime@*/**/*.js',
             'jspm_packages/npm/font-awesome@4.3.0/**',
             'jspm_packages/*.js',
             'jspm_packages/*.map'
