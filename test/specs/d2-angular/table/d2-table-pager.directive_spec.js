@@ -8,10 +8,21 @@ describe('Table pager', () => {
     let scope;
     let isolatedScope;
     let controller;
+    let mockObjectWithToArrayMethod;
 
     beforeEach(module('d2-angular.table'));
     beforeEach(inject(($compile, $rootScope) => {
-        element = angular.element('<d2-table column-names="tableOptions.columnNames" table-data-source="tableOptions.source"></d2-table>');
+        mockObjectWithToArrayMethod = {
+            toArray() {
+                return [];
+            }
+        };
+
+        element = angular.element(`
+            <d2-table column-names="tableOptions.columnNames"
+                      table-data-source="tableOptions.source">
+            </d2-table>
+        `);
 
         scope = $rootScope.$new();
         scope.tableOptions  = {
@@ -82,7 +93,7 @@ describe('Table pager', () => {
         });
 
         it('should call getNextPage on the pager when next page is clicked', () => {
-            controller.pager.getNextPage = sinon.stub().returns({toArray() {}});
+            controller.pager.getNextPage = sinon.stub().returns(mockObjectWithToArrayMethod);
 
             nextButton.click();
             scope.$apply();
@@ -113,7 +124,7 @@ describe('Table pager', () => {
         });
 
         it('should call getPreviousPage on the pager when next page is clicked', () => {
-            controller.pager.getPreviousPage = sinon.stub().returns({toArray() {}});
+            controller.pager.getPreviousPage = sinon.stub().returns(mockObjectWithToArrayMethod);
 
             previousButton.click();
             scope.$apply();
@@ -142,7 +153,7 @@ describe('Table pager', () => {
         });
 
         it('should call the goToPage method on pager when a page number is called', () => {
-            controller.pager.goToPage = sinon.stub().returns({toArray() {}});
+            controller.pager.goToPage = sinon.stub().returns(mockObjectWithToArrayMethod);
 
             pagingInformation.children().last().children().click();
 

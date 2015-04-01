@@ -11,7 +11,11 @@ describe('Table Directive', () => {
 
     beforeEach(module('d2-angular.table'));
     beforeEach(inject(($compile, $rootScope) => {
-        element = angular.element('<d2-table column-names="tableOptions.columnNames" table-data-source="tableOptions.source"></d2-table>');
+        element = angular.element(`
+            <d2-table column-names="tableOptions.columnNames"
+                      table-data-source="tableOptions.source">
+            </d2-table>
+        `);
 
         scope = $rootScope.$new();
         scope.tableOptions  = {

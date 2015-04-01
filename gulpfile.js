@@ -132,6 +132,11 @@ gulp.task('copy-to-dev', function (cb) {
     return runSequence('clean', 'copy-d2-source', /*'test',*/ 'scss', /*'jshint', 'jscs',*/ ['min', 'deps'], 'copy-images', 'copy-app', cb);
 });
 
+gulp.task('travis', function () {
+    var runSequence = require('run-sequence');
+    return runSequence('test', 'jshint', 'jscs');
+});
+
 function runKarma(watch) {
     var config = {
         configFile: 'test/karma.conf.js'

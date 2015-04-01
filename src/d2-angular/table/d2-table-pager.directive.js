@@ -4,7 +4,9 @@ function d2TablePagerDirective() {
         require: '^d2Table',
         template: `
             <div class="d2-table-pager" ng-if="tableCtrl.pager">
-                <button class="previous-page" ng-show="tableCtrl.pager.hasPreviousPage()" ng-click="getPreviousPageClick()">
+                <button class="previous-page"
+                        ng-show="tableCtrl.pager.hasPreviousPage()"
+                        ng-click="getPreviousPageClick()">
                     <i class="fa fa-chevron-left"></i>
                 </button>
                 <ul class="pagination">
@@ -40,33 +42,37 @@ function d2TablePagerDirective() {
             scope.$watch(function () {
                 return controller.pager;
             }, function (newVal, oldVal) {
-                let pages = [];
-
                 if (!controller.pager || newVal === oldVal) {return;}
 
-                if (controller.pager.page >= 3) {
+                scope.pagination = generatePagesBasedOfPager(controller.pager);
+            });
+
+            function generatePagesBasedOfPager(pager) {
+                let pages = [];
+
+                if (pager.page >= 3) {
                     pages.push({pageNr: 1, active: false});
 
-                    if (controller.pager.page > 3) {
+                    if (pager.page > 3) {
                         pages.push({separator: '...'});
                     }
                 }
 
-                for (let i = controller.pager.page - 1; i < controller.pager.page + 2 && i <= controller.pager.pageCount; i += 1) {
+                for (let i = pager.page - 1; i < pager.page + 2 && i <= pager.pageCount; i += 1) {
                     if (i > 0) {
-                        pages.push({pageNr: i, active: controller.pager.page === i ? true : false});
+                        pages.push({pageNr: i, active: pager.page === i ? true : false});
                     }
                 }
 
-                if (controller.pager.page <= controller.pager.pageCount - 2) {
-                    if (controller.pager.page !== controller.pager.pageCount - 2) {
+                if (pager.page <= pager.pageCount - 2) {
+                    if (pager.page !== pager.pageCount - 2) {
                         pages.push({separator: '...'});
                     }
-                    pages.push({pageNr: controller.pager.pageCount, active: false});
+                    pages.push({pageNr: pager.pageCount, active: false});
                 }
 
-                scope.pagination = pages;
-            });
+                return pages;
+            }
         }
     };
 }

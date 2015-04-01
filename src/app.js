@@ -35,7 +35,6 @@ class ListController {
             this.source = models[$routeParams.modelName].list();
         }
 
-
         this.columns = ['id', 'name'];
     }
 }

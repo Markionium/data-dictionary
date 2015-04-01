@@ -60,5 +60,5 @@
         "$": false
     },
 
-    "predef": ["jasmine", "describe", "it", "beforeEach", "afterEach", "inject", "module", "expect", "spyOn", "fixtures"]
+    "predef": ["sinon", "describe", "it", "beforeEach", "afterEach", "inject", "module", "expect", "fixtures"]
 }
