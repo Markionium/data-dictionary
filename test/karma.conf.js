@@ -1,7 +1,13 @@
 module.exports = function( config ) {
     config.set({
         basePath: '../',
-        //frameworks: ['mocha', 'chai', 'sinon-chai', 'sinon', 'systemjs'],
+
+        //Frameworks to use with karma
+        frameworks: ['mocha', 'chai', 'sinon-chai', 'sinon'/*, 'systemjs'*/],
+
+        //How will the results of the tests be reported
+        reporters: ['mocha'],
+
         //
         //plugins: ['karma-systemjs', 'karma-mocha', 'karma-chai', 'karma-sinon', 'karma-sinon-chai', 'karma-chrome-launcher', 'karma-ng-html2js-preprocessor', 'karma-mocha-reporter'],
         //
@@ -17,7 +23,7 @@ module.exports = function( config ) {
         //    {pattern: './src/**/*.html', included: false, watched: true, served: true},
         //],
         //
-        //reporters: ['mocha'],
+
         //
         //'babelPreprocessor': {
         //    options: {
