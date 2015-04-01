@@ -2,6 +2,8 @@
 import jquery from 'jquery';
 import angular from 'angular';
 import 'angular-route';
+import 'angular-animate';
+import 'angular-aria';
 import 'angular-material';
 
 import AppController from './app/app.controller';

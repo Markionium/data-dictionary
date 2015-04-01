@@ -103,11 +103,8 @@ gulp.task('deps', function () {
             'config.js',
             'jspm_packages/github/**/*.js',
             'jspm_packages/github/**/*.css',
-            'jspm_packages/npm/d2/*.js',
-            'jspm_packages/npm/babel@*.js',
-            'jspm_packages/npm/babel@*/*.js',
-            'jspm_packages/npm/babel-runtime@*/**/*.js',
-            'jspm_packages/npm/font-awesome@4.3.0/**',
+            'jspm_packages/npm/**/*.js',
+            'jspm_packages/npm/**/*.css',
             'jspm_packages/*.js',
             'jspm_packages/*.map'
         ], {base: '.'})
