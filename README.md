@@ -1,4 +1,7 @@
-d2-start
+data-dictionary app for DHIS2
+
+[![Build Status](https://travis-ci.org/Markionium/data-dictionary.svg)](https://travis-ci.org/Markionium/data-dictionary)
+
 ========
 
 # Get started
@@ -6,7 +9,7 @@ d2-start
 ## Install dependencies
 ```
 npm install
-bower install
+jspm install
 ```
 
 ## Run the build
