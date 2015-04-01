@@ -6,7 +6,7 @@ import 'angular-material';
 
 import AppController from './app/app.controller';
 
-import d2Angular from 'd2.angular';
+import d2Angular from 'd2-angular';
 
 var myApp = angular.module('MyApp', ['d2.models', 'd2.api', 'd2.components', 'ngMaterial', 'ngRoute']);
 angular.module('MyApp').controller('AppController', AppController);

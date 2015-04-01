@@ -1,12 +1,12 @@
 import d2 from 'd2';
 import angular from 'angular';
 
-import models from 'd2.angular/models/models.service';
-import modelDefinitions from 'd2.angular/models/model-definitions.service';
-import Api from 'd2.angular/api/Api';
+import models from 'd2-angular/models/models.service';
+import modelDefinitions from 'd2-angular/models/model-definitions.service';
+import Api from 'd2-angular/api/Api';
 
 //UI Components
-import 'd2.angular/table/d2-table';
+import 'd2-angular/table/d2-table';
 
 let isUndefined = angular.isUndefined;
 
