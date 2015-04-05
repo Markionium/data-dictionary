@@ -1,24 +1,24 @@
 function d2TableDirective($q) {
-    function D2TableDirectiveController() {
-        this.isLoading = false;
-        this.tableDataSource;
-        this.sourcePromise;
-        this.columnNames;
-        this.rows = [];
+    class D2TableDirectiveController {
+        constructor() {
+            this.isLoading = false;
+            this.tableDataSource;
+            this.sourcePromise;
+            this.columnNames;
+            this.rows = [];
 
-        this.initialise();
-    }
+            this.initialise();
+        }
 
-    D2TableDirectiveController.prototype = {
         initialise() {
             this.isLoading = true;
             this.sourcePromise = $q.when(this.tableDataSource);
             this.updateRows();
-        },
+        }
 
         getHeaderName(columnName) {
             return columnName.replace(/([A-Z])/, ($0) => ' ' + $0).replace(/^(.)/, ($0) => $0.toUpperCase());
-        },
+        }
 
         updateRows() {
             this.sourcePromise
@@ -33,7 +33,7 @@ function d2TableDirective($q) {
                 })
                 .finally(() => this.isLoading = false);
         }
-    };
+    }
 
     return {
         restrict: 'E',
@@ -67,8 +67,10 @@ function d2TableDirective($q) {
                     </tbody>
                 </table>
                 <d2-table-pager></d2-table-pager>
+                <ng-transclude></ng-transclude>
             </div>
         `,
+        transclude: true,
         controller: D2TableDirectiveController,
         controllerAs: 'tableCtrl',
         bindToController: true,

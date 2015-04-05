@@ -14,6 +14,7 @@ describe('Table Directive', () => {
         element = angular.element(`
             <d2-table column-names="tableOptions.columnNames"
                       table-data-source="tableOptions.source">
+                <d2-table-context-menu></d2-table-context-menu>
             </d2-table>
         `);
 
@@ -171,6 +172,12 @@ describe('Table Directive', () => {
                 expect(firstDataRow.children()[1].textContent).to.equal('BDC');
                 expect(firstDataRow.children()[2].textContent).to.equal('Tomorrow');
             }));
+        });
+    });
+
+    describe('transclusion', () => {
+        it('should transclude the context menu into the html result', () => {
+            expect(element.find('d2-table-context-menu').html()).to.not.be.undefined;
         });
     });
 });
