@@ -6,7 +6,7 @@ import modelDefinitions from 'd2-angular/models/model-definitions.service';
 import Api from 'd2-angular/api/Api';
 
 //UI Components
-import 'd2-angular/table/d2-table';
+import 'd2-angular/table/d2-table.module';
 
 let isUndefined = angular.isUndefined;
 
@@ -19,25 +19,25 @@ function continueBootstrap(appName, extraDependencies = []) {
 
 function logBootstrapError(e) {
     console.error('Error during bootstrap process');
-    console.error(e);
+    console.trace(e.trace);
+    console.error(e.message);
 }
 
 function buildD2AngularModule(d2) {
     //Global d2 angular module
-    angular.module('d2.angular', []);
-    angular.module('d2.angular').factory('d2', () => d2);
+    angular.module('d2', []).factory('d2', () => d2);
 
     //D2 models
-    angular.module('d2.models', ['d2.angular']);
+    angular.module('d2.models', ['d2']);
     angular.module('d2.models').factory('models', models);
     angular.module('d2.models').factory('modelDefinitions', models);
 
-    angular.module('d2.api', ['d2.angular']);
+    angular.module('d2.api', ['d2']);
     angular.module('d2.api').factory('Api', () => {
         return Api;
     });
 
-    angular.module('d2.components', ['d2.angular.table']);
+    angular.module('d2-angular', ['d2', 'd2-angular.table']);
 }
 
 function initLibrary(options) {

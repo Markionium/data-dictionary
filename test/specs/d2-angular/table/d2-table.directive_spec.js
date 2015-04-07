@@ -1,20 +1,20 @@
 import angular from 'angular';
 import 'angular-mocks';
 
-import 'd2-angular/table/d2-table';
+import 'd2-angular/table/d2-table.module';
 
-describe('Table Directive', () => {
+describe('D2 Table: Table directive', () => {
     let element;
     let scope;
-    let isolatedScope;
     let controller;
+    let isolatedScope;
 
     beforeEach(module('d2-angular.table'));
     beforeEach(inject(($compile, $rootScope) => {
         element = angular.element(`
             <d2-table column-names="tableOptions.columnNames"
                       table-data-source="tableOptions.source">
-                <d2-table-context-menu></d2-table-context-menu>
+                <div id="transcludedContent"></div>
             </d2-table>
         `);
 
@@ -31,8 +31,9 @@ describe('Table Directive', () => {
         $compile(element)(scope);
         scope.$digest();
 
-        isolatedScope = element.scope();
         controller = element.controller('d2Table');
+
+        isolatedScope = element.isolateScope();
     }));
 
     it('should have be a table element', () => {
@@ -175,9 +176,60 @@ describe('Table Directive', () => {
         });
     });
 
+    describe('when row clicked', () => {
+        let firstDataRow;
+
+        beforeEach(function () {
+            let tableBodyElement = element.find('tbody');
+            firstDataRow = angular.element(tableBodyElement.children()[0]);
+        });
+
+        it('should fire the rowClicked event', () => {
+            let eventCallBack = sinon.spy();
+
+            controller.onSelected(eventCallBack);
+
+            firstDataRow.click();
+            isolatedScope.$apply();
+
+            expect(eventCallBack).to.be.called;
+        });
+
+        it('should pass the model to the rowClicked event', (done) => {
+            controller.onSelected(function ($event, data) {
+                expect(data).to.equal(scope.tableOptions.source[0]);
+                done();
+            });
+
+            firstDataRow.click();
+            isolatedScope.$apply();
+        });
+
+        it('should pass the event to the onSelected callbacks', (done) => {
+            controller.onSelected(function ($event) {
+                expect($event).not.to.be.undefined;
+                expect($event.type).to.equal('click');
+                done();
+            });
+
+            firstDataRow.click();
+            isolatedScope.$apply();
+        });
+
+        it('should set the passed model as the current selected row', (done) => {
+            controller.onSelected(function ($event, model) {
+                expect(model).to.equal(controller.selected);
+                done();
+            });
+
+            firstDataRow.click();
+            isolatedScope.$apply();
+        });
+    });
+
     describe('transclusion', () => {
         it('should transclude the context menu into the html result', () => {
-            expect(element.find('d2-table-context-menu').html()).to.not.be.undefined;
+            expect(element.find('#transcludedContent')[0]).to.not.be.undefined;
         });
     });
 });

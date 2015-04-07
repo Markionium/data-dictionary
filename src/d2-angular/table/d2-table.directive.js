@@ -6,6 +6,8 @@ function d2TableDirective($q) {
             this.sourcePromise;
             this.columnNames;
             this.rows = [];
+            this.selected;
+            this.onSelectedCallBacks = [];
 
             this.initialise();
         }
@@ -23,15 +25,27 @@ function d2TableDirective($q) {
         updateRows() {
             this.sourcePromise
                 .then((data) => {
-                    if (data.pager) {
+                    if (data && data.pager) {
                         this.pager = data.pager;
                     }
-                    if (data.toArray) {
+                    if (data && data.toArray) {
                         data = data.toArray();
                     }
-                    this.rows = data;
+                    this.rows = data || [];
                 })
                 .finally(() => this.isLoading = false);
+        }
+
+        onSelected(callBack) {
+            this.onSelectedCallBacks.push(callBack);
+        }
+
+        selectionChanged($event) {
+            if (!this.selected) { return; }
+
+            this.onSelectedCallBacks.forEach((callback) => {
+                callback.apply(null, [$event, this.selected]);
+            });
         }
     }
 
@@ -58,7 +72,9 @@ function d2TableDirective($q) {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="row in tableCtrl.rows">
+                        <tr ng-repeat="row in tableCtrl.rows"
+                            ng-click="rowClick($event, row)"
+                            class="d2-table-row">
                             <td data-title="{{::tableCtrl.getHeaderName(columnName)}}"
                                 ng-repeat="columnName in ::tableCtrl.columnNames"
                                 ng-bind="::row[columnName]">
@@ -80,6 +96,11 @@ function d2TableDirective($q) {
                     controller.initialise();
                 }
             });
+
+            $scope.rowClick = function ($event, model) {
+                controller.selected = model;
+                controller.selectionChanged($event);
+            };
         }
     };
 }

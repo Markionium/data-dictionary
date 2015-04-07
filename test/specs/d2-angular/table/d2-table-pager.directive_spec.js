@@ -1,9 +1,9 @@
 import angular from 'angular';
 import 'angular-mocks';
 
-import 'src/d2-angular/table/d2-table';
+import 'src/d2-angular/table/d2-table.module';
 
-describe('Table pager', () => {
+describe('D2 Table: Pager directive', () => {
     let element;
     let scope;
     let isolatedScope;
