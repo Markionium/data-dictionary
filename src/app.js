@@ -4,21 +4,17 @@ import angular from 'angular';
 import 'angular-route';
 import 'angular-animate';
 import 'angular-aria';
-import 'angular-material';
 
 import AppController from './app/app.controller';
+import ListController from './list/list.controller';
 
 import d2Angular from 'd2.angular';
 
-var myApp = angular.module('MyApp', ['d2.models', 'd2.api', 'd2-angular', 'ngMaterial', 'ngRoute']);
-angular.module('MyApp').controller('AppController', AppController);
-angular.module('MyApp').config(($mdThemingProvider) => {
-    $mdThemingProvider.theme('default')
-        .primaryPalette('blue')
-        .accentPalette('deep-orange');
-});
+let dataDictionary = angular.module('dataDictionary', ['d2.models', 'd2.api', 'd2-angular', 'ngRoute'])
+    .controller('AppController', AppController)
+    .controller('listController', ListController);
 
-angular.module('MyApp').config(($routeProvider) => {
+angular.module('dataDictionary').config(($routeProvider) => {
     $routeProvider.when('/:modelName', {
         templateUrl: 'list/list.html',
         controller: 'listController',
@@ -26,21 +22,9 @@ angular.module('MyApp').config(($routeProvider) => {
     });
 });
 
-class ListController {
-    constructor(models, $routeParams) {
-        if ($routeParams.modelName && models[$routeParams.modelName]) {
-            this.source = models[$routeParams.modelName].list();
-        }
-
-        this.columns = ['id', 'name'];
-    }
-}
-
-angular.module('MyApp').controller('listController', ListController);
-
 d2Angular({
     baseUrl: '/dhis/api/',
-    appName: 'MyApp'
+    appName: 'dataDictionary'
 });
 
-export default myApp;
+export default dataDictionary;

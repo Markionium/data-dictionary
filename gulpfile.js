@@ -98,6 +98,16 @@ gulp.task('copy-d2-source', ['clean-d2-source'], function () {
         .pipe(gulp.dest('jspm_packages/npm/d2'));
 });
 
+gulp.task('clean-d2-angular-source', function (cb) {
+    var del = require('del');
+    del('jspm_packages/npm/d2-angular/*.js', cb);
+});
+
+gulp.task('copy-d2-angular-source', ['clean-d2-angular-source'], function () {
+    return gulp.src(['../d2-angular/build/*'], {base: '../d2-angular/build'})
+        .pipe(gulp.dest('jspm_packages/npm/d2-angular'));
+});
+
 gulp.task('deps', function () {
     return gulp.src([
             'config.js',
@@ -129,7 +139,7 @@ gulp.task('copy-app', function () {
 
 gulp.task('copy-to-dev', function (cb) {
     var runSequence = require('run-sequence');
-    return runSequence('clean', 'copy-d2-source', /*'test',*/ 'scss', /*'jshint', 'jscs',*/ ['min', 'deps'], 'copy-images', 'copy-app', cb);
+    return runSequence('clean', 'copy-d2-source', 'copy-d2-angular-source', /*'test',*/ 'scss', /*'jshint', 'jscs',*/ ['min', 'deps'], 'copy-images', 'copy-app', cb);
 });
 
 gulp.task('travis', function () {

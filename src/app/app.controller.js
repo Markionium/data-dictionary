@@ -1,8 +1,6 @@
 class AppController {
     constructor(models) {
-        this.name = 'MyApp';
 
-        this.source = models.user.list();
         this.columns = ['id', 'name'];
     }
 }
