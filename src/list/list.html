@@ -1,8 +1,12 @@
 <div class="list-view">
+    <div>
+        <h1><span ng-bind="listCtrl.modelName"></span> management</h1>
+        <d2-button ng-href="#/{{listCtrl.modelName}}/add" class="d2-color-primary add-button d2-fab-lg" icon="plus"></d2-button>
+    </div>
     <d2-table d2-table-context-menu column-names="listCtrl.columns" table-data-source="listCtrl.source">
         <div class="context-menu" ng-show="contextMenu.isVisible()">
             <ul>
-                <li>Edit</li>
+                <li><a ng-href="#/{{contextMenu.model.modelDefinition.name}}/edit/{{contextMenu.model.id}}">Edit</a></li>
                 <li>Details</li>
                 <li><a ng-href="{{contextMenu.getBaseUrl()}}/dhis-web-commons/i18n.action?className={{contextMenu.getModelName()}}&uid={{contextMenu.model.id}}&returnUrl={{contextMenu.getReturnUrl()}}">Translate</a></li>
             </ul>

@@ -1,10 +1,11 @@
 class ListController {
     constructor(models, $routeParams) {
         if ($routeParams.modelName && models[$routeParams.modelName]) {
+            this.modelName = $routeParams.modelName;
             this.source = models[$routeParams.modelName].list();
         }
 
-        this.columns = ['id', 'name'];
+        this.columns = ['name', 'code'];
     }
 }
 

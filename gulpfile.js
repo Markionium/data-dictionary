@@ -53,7 +53,7 @@ gulp.task('jscs', function () {
 });
 
 gulp.task('scss', function () {
-    return $.rubySass(['./src/app.scss'], {loadPath: './src', style: 'expanded'})
+    return $.rubySass(['./src/app.scss'], {loadPath: './src', style: 'expanded', compass: true})
         .on('error', function (err) {
             console.error('Error!', err.message);
         })
@@ -66,26 +66,6 @@ gulp.task('scss', function () {
 gulp.task('min', function () {
     return gulp.src(['src/**/*.*', '!**/*.scss'])
         .pipe(gulp.dest(buildDirectory));
-
-    //var mangleJS = false;
-    //
-    //var assets = $.useref.assets();
-    //
-    //return gulp.src('src/**/*.html')
-    //    .pipe(assets)
-    //    .pipe(assets.restore())
-    //    .pipe($.useref())
-    //    .pipe($.if('*.css', $.minifyCss()))
-    //    .pipe($.if('**/app.js', $.ngAnnotate({
-    //        add: true,
-    //        remove: true,
-    //        single_quotes: true,
-    //        stats: true
-    //    })))
-    //    //.pipe($.if('*.js', $.uglify({
-    //    //    mangle: mangleJS
-    //    //})))
-    //    .pipe(gulp.dest(buildDirectory));
 });
 
 gulp.task('clean-d2-source', function (cb) {
@@ -100,11 +80,11 @@ gulp.task('copy-d2-source', ['clean-d2-source'], function () {
 
 gulp.task('clean-d2-angular-source', function (cb) {
     var del = require('del');
-    del('jspm_packages/npm/d2-angular/*.js', cb);
+    del('jspm_packages/npm/d2-angular/**', cb);
 });
 
 gulp.task('copy-d2-angular-source', ['clean-d2-angular-source'], function () {
-    return gulp.src(['../d2-angular/build/*'], {base: '../d2-angular/build'})
+    return gulp.src(['../d2-angular/build/**'], {base: '../d2-angular/build'})
         .pipe(gulp.dest('jspm_packages/npm/d2-angular'));
 });
 

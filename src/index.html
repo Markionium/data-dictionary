@@ -1,56 +1,65 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet" type="text/css">
-    <link href="jspm_packages/npm/d2-angular/d2-angular.css" rel="stylesheet" type="text/css" />
+    <meta charset="UTF-8">
+    <title>Data Dictionary</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet"
+          type="text/css">
+    <!--<link href="jspm_packages/npm/d2-angular/d2-angular.css" rel="stylesheet" type="text/css"/>-->
 
-    <link href="css/app.css" rel="stylesheet" type="text/css" />
+    <link href="css/app.css" rel="stylesheet" type="text/css"/>
 </head>
-<body ng-controller="AppController as app" layout="row" flex>
-    <md-sidenav flex md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
-        <md-content>
-            <ul class="side-nav-left-group">
-                <li>
-                    <h2>Data Element</h2>
-                </li>
-                <li><a href="#/dataElement" md-button>Data Element</a></li>
-                <li><a href="#/dataElementGroup" md-button>Data Element Group</a></li>
-                <li><a href="#/dataElementGroupEditor" md-button>Data Element Group Editor</a></li>
-                <li><a href="#/dataElementGroupSet" md-button>Data Element Group Set</a></li>
-            </ul>
-            <ul class="side-nav-left-group">
-                <li>
-                    <h2>Category</h2>
-                </li>
-                <li><a href="#/categoryOptionCombo" md-button>Category Option Combo</a></li>
-                <li><a href="#/categoryOption" md-button>Category Option</a></li>
-                <li><a href="#/category" md-button>Category</a></li>
-                <li><a href="#/categoryCombination" md-button>Category Combination</a></li>
-                <li><a href="#/categoryOptionGroup" md-button>Category Option Group</a></li>
-                <li><a href="#/categoryOptionGroupSet" md-button>Category Option Group Set</a></li>
-            </ul>
-            <ul class="side-nav-left-group">
-                <li>
-                    <h2>Indicator</h2>
-                </li>
-                <li><a href="#/indicator" md-button>Indicator</a></li>
-                <li><a href="#/indicatorType" md-button>Indicator Type</a></li>
-                <li><a href="#/indicatorGroup" md-button>Indicator Group</a></li>
-                <li><a href="#/indicatorGroupEditor" md-button>Indicator Group Editor</a></li>
-                <li><a href="#/indicatorGroupSet" md-button>Indicator Group Set</a></li>
-            </ul>
-        </md-content>
-    </md-sidenav>
-    <md-content flex>
-        <ng-view></ng-view>
-    </md-content>
+<body ng-controller="appController as app">
 
-    <script src="jspm_packages/system.js"></script>
-    <script src="config.js"></script>
-    <script>
-        System.bundles['jspm_packages/npm/d2-angular/d2-angular'] = ['d2.angular'];
-        System.import('app');
-    </script>
+<div class="side-bar">
+    <nav class="sidenav">
+        <ul class="side-nav-left-group">
+            <li>
+                <h2>Data Element</h2>
+            </li>
+            <li><a href="#/dataElement" d2-button>Data Element</a></li>
+            <li><a href="#/dataElementGroup" d2-button>Data Element Group</a></li>
+            <li><a href="#/dataElementGroupEditor" d2-button>Data Element Group Editor</a></li>
+            <li><a href="#/dataElementGroupSet" d2-button>Data Element Group Set</a></li>
+        </ul>
+        <ul class="side-nav-left-group">
+            <li>
+                <h2>Category</h2>
+            </li>
+            <li><a href="#/categoryOptionCombo" d2-button>Category Option Combo</a></li>
+            <li><a href="#/categoryOption" d2-button>Category Option</a></li>
+            <li><a href="#/category" d2-button>Category</a></li>
+            <li><a href="#/categoryCombination" d2-button>Category Combination</a></li>
+            <li><a href="#/categoryOptionGroup" d2-button>Category Option Group</a></li>
+            <li><a href="#/categoryOptionGroupSet" d2-button>Category Option Group Set</a></li>
+        </ul>
+        <ul class="side-nav-left-group">
+            <li>
+                <h2>Indicator</h2>
+            </li>
+            <li><a href="#/indicator" d2-button>Indicator</a></li>
+            <li><a href="#/indicatorType" d2-button>Indicator Type</a></li>
+            <li><a href="#/indicatorGroup" d2-button>Indicator Group</a></li>
+            <li><a href="#/indicatorGroupEditor" d2-button>Indicator Group Editor</a></li>
+            <li><a href="#/indicatorGroupSet" d2-button>Indicator Group Set</a></li>
+        </ul>
+    </nav>
+</div>
+<!-- /side-bar -->
+
+<div class="main-content">
+    <main>
+        <ng-view>
+        </ng-view>
+    </main>
+</div>
+<!-- /main-content -->
+
+<script src="jspm_packages/system.js"></script>
+<script src="config.js"></script>
+<script>
+    System.bundles['jspm_packages/npm/d2-angular/d2-angular'] = ['d2.angular'];
+    System.import('app');
+</script>
 </body>
 </html>
