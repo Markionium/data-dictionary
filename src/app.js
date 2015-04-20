@@ -74,12 +74,33 @@ angular.module('dataDictionary').directive('d2FormForModelFieldType', function (
         link: function (scope, element) {
                 let fieldTemplate = '';
 
-                if (scope.field.type === 'textarea') {
-                    fieldTemplate = `<textarea name="{{field.name}}" ng-model="model[field.property]" ng-required="field.required"></textarea>`;
-                } else {
-                    fieldTemplate = `<input name="{{field.name}}" type="{{field.type}}" placeholder="{{field.placeholder}}" ng-model="model[field.property]" ng-required="field.required"/>`;
+                switch (scope.field.type) {
+                    case 'select':
+                        selectField();
+                        break;
+                    case 'textarea':
+                        fieldTemplate = `<textarea name="{{field.name}}" ng-model="model[field.property]" ng-required="field.required"></textarea>`;
+                        textField(fieldTemplate);
+                        break;
+                    default:
+                        fieldTemplate = `<input name="{{field.name}}" type="{{field.type}}" placeholder="{{field.placeholder}}" ng-model="model[field.property]" ng-required="field.required"/>`;
+                        textField(fieldTemplate);
                 }
 
+
+            function selectField() {
+                let fieldTemplate = angular.element(`
+                        <label>{{field.name}}</label>
+                        <select name="{{field.name}}" ng-model="model[field.property]" ng-required="field.required">
+                            <option ng-value="option" ng-repeat="option in field.options" ng-bind="option | lowercase"></option>
+                        </select>
+                `);
+
+                element.append(fieldTemplate);
+                $compile(fieldTemplate)(scope);
+            }
+
+            function textField(fieldTemplate) {
                 fieldTemplate = angular.element(`
                     <d2-input>
                         <label>{{field.name}}</label>
@@ -89,6 +110,7 @@ angular.module('dataDictionary').directive('d2FormForModelFieldType', function (
 
                 element.append(fieldTemplate);
                 $compile(fieldTemplate)(scope);
+            }
         }
     };
 });
@@ -120,7 +142,8 @@ angular.module('dataDictionary').directive('d2FormForModel', function () {
         let fieldsToNeverShow = ['id', 'publicAccess', 'created', 'lastUpdated'];
         let headFieldNames = ['name', 'shortName', 'code'];
         let typeMap = {
-            'text': ['TEXT', 'IDENTIFIER']
+            'text': ['TEXT', 'IDENTIFIER'],
+            'select': ['CONSTANT']
         };
         let propertyNames = scope.model.modelDefinition.getOwnedPropertyNames()
             .filter(propertyName => !fieldsToNeverShow.includes(propertyName))
@@ -159,14 +182,22 @@ angular.module('dataDictionary').directive('d2FormForModel', function () {
         }
 
         function getFieldConfig(propertyName) {
-            return {
+            let modelOptions = scope.model.modelDefinition.modelValidations[propertyName];
+
+            let fieldConfig = {
                 name: propertyName,
-                type: getType(scope.model.modelDefinition.modelValidations[propertyName].type),
+                type: getType(modelOptions.type),
                 placeholder: '',
                 property: propertyName,
                 isHeadField: headFieldNames.includes(propertyName),
-                required: scope.model.modelDefinition.modelValidations[propertyName].required
+                required: modelOptions.required
             };
+
+            if (modelOptions.constants) {
+                fieldConfig.options = modelOptions.constants;
+            }
+
+            return fieldConfig;
         }
     }
 });
