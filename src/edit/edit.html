@@ -1,6 +1,6 @@
 <div>
     <form name="editForm" class="frame-z1 d2-form">
-        <d2-form-for-model model="editCtrl.modelToEdit"></d2-form-for-model>
+        <d2-form-for-model model="editCtrl.modelToEdit" manager="editCtrl.fieldManager"></d2-form-for-model>
         <div class="form-actions">
             <d2-button icon="save" ng-click="editCtrl.save()" class="d2-button-primary" type="submit">Save</d2-button>
             <d2-button icon="close" href="#/{{editCtrl.modelName}}">Cancel</d2-button>
