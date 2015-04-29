@@ -127,6 +127,21 @@ gulp.task('travis', function () {
     return runSequence('test', 'jshint', 'jscs');
 });
 
+/***********************************************************************************************************************
+ * Githooks
+ */
+gulp.task('git:pre-commit', function (cb) {
+    var runSequence = require('run-sequence');
+
+    //Gulp exists with 0 and for the pre-commit hook to fail we need to exit with a not 0 error code
+    gulp.on('err', function(e){
+        console.log('Pre-commit validate failed');
+        process.exit(1);
+    });
+
+    runSequence('test', 'jshint', 'jscs', cb);
+});
+
 function runKarma(watch) {
     var config = {
         configFile: 'test/karma.conf.js'

@@ -53,7 +53,7 @@ class EditController {
                     'longText'
                 ],
                 hideWhen: model => model.type !== 'string'
-            })
+            });
     }
 
     save() {
@@ -61,10 +61,10 @@ class EditController {
         console.log(validationStatus);
 
         this.modelToEdit.save()
-            .then(() => alert('Success'))
+            .then(() => window.alert('Success'))
             .catch(error => {
                 console.log(error);
-                alert('Failed')
+                window.alert('Failed');
             });
     }
 }
