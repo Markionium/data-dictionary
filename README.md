@@ -1,6 +1,6 @@
 data-dictionary app for DHIS2
 
-[![Build Status](https://travis-ci.org/Markionium/data-dictionary.svg)](https://travis-ci.org/Markionium/data-dictionary)
+[![Build Status](https://travis-ci.org/Markionium/data-dictionary.svg)](https://travis-ci.org/Markionium/data-dictionary) [![Code Climate](https://codeclimate.com/github/Markionium/data-dictionary/badges/gpa.svg)](https://codeclimate.com/github/Markionium/data-dictionary)
 
 ========
 
