@@ -63,8 +63,7 @@ class EditController {
         this.modelToEdit.save()
             .then(() => window.alert('Success'))
             .catch(error => {
-                console.log(error);
-                window.alert('Failed');
+                window.alert(error);
             });
     }
 }
