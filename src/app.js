@@ -1,5 +1,3 @@
-import 'babel/browser-polyfill';
-
 //Third party
 import jquery from 'jquery';
 import angular from 'angular';
