@@ -1,0 +1,1 @@
+{"version":"0.0.1","name":"Data Dictionary","description":"Data Dictionary Management application for DHIS2","icons":{"48":"./images/data-element.png"},"developer":{"url":"","name":"DHIS2 Core Team"},"launch_path":"index.html","default_locale":"en","activities":{"dhis":{"href":"*"}}}
