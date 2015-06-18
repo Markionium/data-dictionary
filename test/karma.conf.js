@@ -28,10 +28,12 @@ module.exports = function( config ) {
 
             files: [
                 //Dependency files
-                'jspm_packages/npm/**/*.js',
+                'jspm_packages/npm/*.js',
+                'jspm_packages/npm/*/*.js',
+                'jspm_packages/npm/*/dist/*.js',
                 'jspm_packages/npm/**/*.css',
                 'jspm_packages/github/**/*.js',
-                'jspm_packages/github/**/*.css',
+                'jspm_packages/npm/*/!(src)/**', // angular-formly and api-check include their source files and they bug out with the loader. Therefore ignore any /src/ maps.
 
                 //App source files
                 'src/**/*.html',

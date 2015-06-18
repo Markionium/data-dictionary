@@ -74,18 +74,19 @@ gulp.task('clean-d2-source', function (cb) {
 });
 
 gulp.task('copy-d2-source', ['clean-d2-source'], function () {
-   return gulp.src(['../d2/build/*'], {base: '../d2/build'})
-        .pipe(gulp.dest('jspm_packages/npm/d2'));
+   return gulp.src(['../../d2-libs/d2/build/*'], {base: '../../d2-libs/d2/build'})
+        .pipe(gulp.dest('jspm_packages/npm/d2'))
+        .pipe(gulp.dest('jspm_packages/npm/d2@0.0.4'));
 });
 
 gulp.task('clean-d2-angular-source', function (cb) {
     var del = require('del');
-    del('jspm_packages/npm/d2-angular/**', cb);
+    del('jspm_packages/npm/d2-angular@0.0.4/**', cb);
 });
 
 gulp.task('copy-d2-angular-source', ['clean-d2-angular-source'], function () {
-    return gulp.src(['../d2-angular/build/**'], {base: '../d2-angular/build'})
-        .pipe(gulp.dest('jspm_packages/npm/d2-angular'));
+    return gulp.src(['../../d2-libs/d2-angular/build/**'], {base: '../../d2-libs/d2-angular/build'})
+        .pipe(gulp.dest('jspm_packages/npm/d2-angular@0.0.4'));
 });
 
 gulp.task('deps', function () {

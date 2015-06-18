@@ -21,10 +21,11 @@
     "url": "https://github.com/Markionium/data-dictionary/issues"
   },
   "devDependencies": {
-    "babel": "^5.1.13",
+    "babel": "^5.5.8",
+    "babel-core": "^5.5.8",
     "chai": "~2.2.0",
     "del": "~1.1.1",
-    "es6-module-loader": "^0.16.6",
+    "es6-module-loader": "^0.17.1",
     "gulp": "~3.8.11",
     "gulp-if": "~1.2.5",
     "gulp-jscs": "~1.4.0",
@@ -46,7 +47,7 @@
     "karma-phantomjs-launcher": "~0.1.4",
     "karma-sinon": "~1.0.4",
     "karma-sinon-chai": "~0.3.0",
-    "karma-systemjs": "^0.3.0",
+    "karma-systemjs": "^0.5.0",
     "mocha": "~2.2.1",
     "phantomjs-polyfill": "0.0.1",
     "precommit-hook": "^2.0.1",
@@ -54,7 +55,7 @@
     "run-sequence": "~1.0.2",
     "sinon": "~1.14.1",
     "sinon-chai": "~2.7.0",
-    "systemjs": "^0.16.10"
+    "systemjs": "^0.17.1"
   },
   "pre-commit": [
     "validate"
@@ -64,19 +65,23 @@
       "test": "test"
     },
     "dependencies": {
-      "angular": "npm:angular@^1.4.0-rc.1",
+      "angular": "npm:angular@1.4.0",
       "angular-animate": "npm:angular-animate@^1.4.0-rc.1",
       "angular-aria": "npm:angular-aria@^1.4.0-rc.1",
+      "angular-formly": "npm:angular-formly@^6.14.0",
       "angular-mocks": "npm:angular-mocks@^1.4.0-rc.1",
       "angular-route": "npm:angular-route@^1.4.0-rc.1",
+      "api-check": "npm:api-check@^7.3.0",
       "babel-core": "npm:babel-core@5.2.17",
-      "babel-runtime": "npm:babel-runtime@5.2.17",
+      "babel-runtime": "npm:babel-runtime@^5.1.13",
+      "d2": "npm:d2@^0.0.4",
+      "d2-angular": "npm:d2-angular@^0.0.4",
       "jquery": "github:components/jquery@^2.1.4"
     },
     "devDependencies": {
-      "babel": "npm:babel-core@^5.1.13",
+      "babel": "npm:babel-core@^5.4.3",
       "babel-runtime": "npm:babel-runtime@^5.1.13",
-      "core-js": "npm:core-js@^0.9.4"
+      "core-js": "npm:core-js@^0.9.10"
     }
   }
 }

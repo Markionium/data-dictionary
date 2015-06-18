@@ -8,6 +8,9 @@ import 'angular-aria';
 //DHIS2
 import d2Angular from 'd2.angular';
 
+import FormlyClass from 'd2-angular/form/d2-form-formly-fields-for-model.service';
+console.log(FormlyClass);
+
 //App
 import AppController from './app/app.controller';
 import ListController from './list/list.controller';
