@@ -86,6 +86,7 @@ gulp.task('clean-d2-angular-source', function (cb) {
 
 gulp.task('copy-d2-angular-source', ['clean-d2-angular-source'], function () {
     return gulp.src(['../../d2-libs/d2-angular/build/**'], {base: '../../d2-libs/d2-angular/build'})
+        .pipe(gulp.dest('jspm_packages/npm/d2-angular'))
         .pipe(gulp.dest('jspm_packages/npm/d2-angular@0.0.4'));
 });
 
